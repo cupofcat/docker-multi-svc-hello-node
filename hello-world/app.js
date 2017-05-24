@@ -1,7 +1,10 @@
 "use strict"
 const http = require('http');
+const os = require('os');
 const RxHttpRequest = require('rx-http-request').RxHttpRequest;
 var Rx = require('rxjs/Rx');
+
+let hostname = os.hostname();
 
 function hello_world() {
   return Rx.Observable.concat(
@@ -9,7 +12,7 @@ function hello_world() {
     RxHttpRequest.get('http://world-svc:5000'))
     .reduce(
       (acc, x, idx, source) => {
-         return acc + " " + x.body;
+         return hostname + ": " + acc + " " + x.body;
       }, "");
 }
 
